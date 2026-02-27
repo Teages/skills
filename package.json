@@ -11,7 +11,7 @@
     "url": "git+https://github.com/Teages/skills.git"
   },
   "scripts": {
-    "cli": "jiti cli/index.ts",
+    "build": "jiti cli/build.ts",
     "lint": "eslint --cache .",
     "lint:fix": "eslint --cache --fix .",
     "test:types": "tsc --noEmit --skipLibCheck"
