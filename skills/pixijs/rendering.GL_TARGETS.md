@@ -1,0 +1,59 @@
+# Enumeration: GL\_TARGETS
+
+**`Advanced`**
+
+Various GL target types.
+
+## Enumeration Members
+
+### TEXTURE\_2D
+
+> **TEXTURE\_2D**: `3553`
+
+***
+
+### TEXTURE\_2D\_ARRAY
+
+> **TEXTURE\_2D\_ARRAY**: `35866`
+
+***
+
+### TEXTURE\_CUBE\_MAP
+
+> **TEXTURE\_CUBE\_MAP**: `34067`
+
+***
+
+### TEXTURE\_CUBE\_MAP\_NEGATIVE\_X
+
+> **TEXTURE\_CUBE\_MAP\_NEGATIVE\_X**: `34070`
+
+***
+
+### TEXTURE\_CUBE\_MAP\_NEGATIVE\_Y
+
+> **TEXTURE\_CUBE\_MAP\_NEGATIVE\_Y**: `34072`
+
+***
+
+### TEXTURE\_CUBE\_MAP\_NEGATIVE\_Z
+
+> **TEXTURE\_CUBE\_MAP\_NEGATIVE\_Z**: `34074`
+
+***
+
+### TEXTURE\_CUBE\_MAP\_POSITIVE\_X
+
+> **TEXTURE\_CUBE\_MAP\_POSITIVE\_X**: `34069`
+
+***
+
+### TEXTURE\_CUBE\_MAP\_POSITIVE\_Y
+
+> **TEXTURE\_CUBE\_MAP\_POSITIVE\_Y**: `34071`
+
+***
+
+### TEXTURE\_CUBE\_MAP\_POSITIVE\_Z
+
+> **TEXTURE\_CUBE\_MAP\_POSITIVE\_Z**: `34073`
