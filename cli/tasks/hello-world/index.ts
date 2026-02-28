@@ -1,45 +1,61 @@
 import { writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
+
 import { distDir } from '../../utils/dirs'
+import { createMarkdown } from '../../utils/md'
 
 const TASK_NAME = 'hello-world'
+const DESCRIPTION = `Use when asked to print hello world, demonstrate basic output operations, or show the simplest program in any programming language.`
 
 function content() {
-  return `${`
-# Hello World Skill
+  const md = createMarkdown()
+  md.metadata({
+    name: TASK_NAME,
+    description: DESCRIPTION,
+    license: 'MIT',
+  })
 
-This is a simple skill that prints "Hello, World!" to the console.
+  md.heading('Hello World Skill', 1)
+  md.text(`Printing "Hello, World!" is the traditional first step for any programmer.`)
 
-## Node.js
+  // When to use section
+  md.heading('When to use this skill', 2)
+  md.text('Use this skill when the user:')
+  md.list([
+    'Asks to print "Hello, World!"',
+    'Wants to see a basic output example',
+    'Is learning a new language and needs a starting point',
+  ])
 
-To print "Hello, World!" in Node.js, you can use the following code:
+  // Instructions section
+  md.heading('Instructions', 2)
+  md.text('When asked to print "Hello, World!":')
+  md.list([
+    '**Detect the context**: Check if the project uses a specific language',
+    '**Choose appropriate method**: Select the code example below that matches the context',
+    '**Execute or provide**: Run the code if you have execution permissions, otherwise return the code snippet',
+  ])
 
-\`\`\`javascript
-console.log('Hello, World!');
-\`\`\`
+  // Code Examples section
+  md.heading('Code Examples', 2)
+  md.text('When you have permission to execute code, use the following examples:')
+  const programmingLanguages = [
+    { name: 'Node.js', code: `console.log('Hello, World!')`, lang: 'javascript' },
+    { name: 'Python', code: `print('Hello, World!')`, lang: 'python' },
+    { name: 'Bash', code: `echo 'Hello, World!'`, lang: 'bash' },
+  ]
+  programmingLanguages.forEach(({ name, code, lang }) => {
+    md.heading(name, 3)
+    md.codeBlock(code, lang)
+  })
 
-## Python
+  // Fallback section
+  md.heading('Fallback', 2)
+  md.text(`If no execution environment is available, simply return the string \`Hello, World!\` as a response.`)
 
-To print "Hello, World!" in Python, you can use the following code:
-
-\`\`\`python
-print('Hello, World!')
-\`\`\`
-
-## Bash
-
-To print "Hello, World!" in Bash, you can use the following code:
-
-\`\`\`bash
-echo 'Hello, World!'
-\`\`\`
-
-## Other
-
-If the agent have no execution permissions, it can still return the string \`Hello, World!\` as a response to the user.
-`.trim()}\n`
+  return md.toString()
 }
 
 export default async function () {
-  await writeFile(resolve(distDir(TASK_NAME), 'README.md'), content())
+  await writeFile(resolve(distDir(TASK_NAME), 'SKILL.md'), content())
 }

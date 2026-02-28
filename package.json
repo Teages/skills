@@ -14,15 +14,20 @@
     "build": "jiti cli/build.ts",
     "lint": "eslint --cache .",
     "lint:fix": "eslint --cache --fix .",
+    "test": "vitest run",
     "test:types": "tsc --noEmit --skipLibCheck"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^7.6.1",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.3.2",
     "citty": "^0.2.1",
     "consola": "^3.4.2",
+    "date-fns": "^4.1.0",
     "eslint": "^9.39.3",
     "jiti": "2.6.1",
+    "js-yaml": "^4.1.1",
+    "mdbox": "^0.1.1",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   }
