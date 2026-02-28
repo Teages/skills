@@ -38,6 +38,9 @@ importers:
       mdbox:
         specifier: ^0.1.1
         version: 0.1.1
+      tinyglobby:
+        specifier: ^0.2.15
+        version: 0.2.15
       typescript:
         specifier: ^5.9.3
         version: 5.9.3

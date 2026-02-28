@@ -1,5 +1,7 @@
-import { access, mkdir, readdir, rm, stat } from 'node:fs/promises'
-import { resolve } from 'node:path'
+import { spawn } from 'node:child_process'
+import { access, mkdir, readdir, rm, stat, unlink } from 'node:fs/promises'
+import { extname, resolve } from 'node:path'
+import process from 'node:process'
 import { defineCommand, runMain } from 'citty'
 import { createJiti } from 'jiti'
 import { distDir } from './utils/dirs'
@@ -72,6 +74,28 @@ async function resetTaskOutputDir(taskName: string) {
   await mkdir(outputDir, { recursive: true })
 }
 
+async function resetGitSubmodules() {
+  return new Promise<void>((resolve, reject) => {
+    const proc = spawn('git', ['submodule', 'update', '--recursive', '--force'], {
+      cwd: process.cwd(),
+      stdio: 'inherit',
+    })
+
+    proc.on('close', (code) => {
+      if (code === 0) {
+        resolve()
+      }
+      else {
+        reject(new Error(`git submodule update failed with code ${code}`))
+      }
+    })
+
+    proc.on('error', (err) => {
+      reject(err)
+    })
+  })
+}
+
 async function hasFiles(dirPath: string) {
   const entries = await readdir(dirPath, { withFileTypes: true })
   for (const entry of entries) {
@@ -86,6 +110,25 @@ async function hasFiles(dirPath: string) {
   return false
 }
 
+// Remove non-markdown files from the output directory
+async function removeNonMarkdownFiles(dirPath: string) {
+  const entries = await readdir(dirPath, { withFileTypes: true })
+  for (const entry of entries) {
+    const currentPath = resolve(dirPath, entry.name)
+    if (entry.isDirectory()) {
+      await removeNonMarkdownFiles(currentPath)
+      // Remove empty directories after cleaning
+      const remaining = await readdir(currentPath)
+      if (remaining.length === 0) {
+        await rm(currentPath, { recursive: true })
+      }
+    }
+    else if (entry.isFile() && extname(entry.name) !== '.md') {
+      await unlink(currentPath)
+    }
+  }
+}
+
 async function assertTaskOutputNotEmpty(taskName: string) {
   const outputDir = distDir(taskName)
   const outputHasFiles = await hasFiles(outputDir)
@@ -96,10 +139,13 @@ async function assertTaskOutputNotEmpty(taskName: string) {
 
 async function runTask(taskName: string) {
   const generateSkill = await loadTaskGenerator(taskName)
+  const outputDir = distDir(taskName)
 
   await resetTaskOutputDir(taskName)
   await generateSkill()
+  await removeNonMarkdownFiles(outputDir)
   await assertTaskOutputNotEmpty(taskName)
+  await resetGitSubmodules()
 
   console.log(`✔ Task completed: ${taskName}`)
 }
