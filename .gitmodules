@@ -1,3 +1,6 @@
 [submodule "sources/pixijs"]
 	path = sources/pixijs
 	url = https://github.com/pixijs/pixijs.git
+[submodule "sources/es-toolkit"]
+	path = sources/es-toolkit
+	url = https://github.com/toss/es-toolkit
