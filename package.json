@@ -18,17 +18,17 @@
     "test:types": "tsc --noEmit --skipLibCheck"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^7.6.1",
-    "@types/node": "^25.3.2",
-    "citty": "^0.2.1",
+    "@antfu/eslint-config": "^8.2.0",
+    "@types/node": "^25.6.0",
+    "citty": "^0.2.2",
     "consola": "^3.4.2",
     "date-fns": "^4.1.0",
-    "eslint": "^9.39.3",
+    "eslint": "^10.2.1",
     "jiti": "2.6.1",
     "mdbox": "^0.1.1",
-    "tinyglobby": "^0.2.15",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.18",
-    "yaml": "^2.7.1"
+    "tinyglobby": "^0.2.16",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5",
+    "yaml": "^2.8.3"
   }
 }
