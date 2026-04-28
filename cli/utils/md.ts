@@ -1,10 +1,10 @@
-import yaml from 'js-yaml'
 import { md as _render } from 'mdbox'
+import YAML from 'yaml'
 
 export const render = {
   ..._render,
   metadata: (metadata: unknown) => {
-    return `---\n${yaml.dump(metadata, { lineWidth: -1 })}---`
+    return `---\n${YAML.stringify(metadata, { lineWidth: 0 })}---`
   },
   text: (...text: string[]) => text.join('\n'),
   paragraph: (text: string) => {
